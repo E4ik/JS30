@@ -56,7 +56,31 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+  (function (){
+    window.addEventListener('keydown',playHandler)
+    function playHandler (e){
+    //play music
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+      if (audio){
+        //可多次點選
+        audio.currentTime = 0
+        audio.play()
+      }
+    //dom style
+      const dom = document.querySelector(`div[data-key="${e.keyCode}"]`)
+      if (dom) dom.classList.add('playing')
+    }  
+      //remove transition
+    document.querySelectorAll('.key').forEach(function(k){
+      k.addEventListener('transitionend',transitionHandler)
+    }) 
+    function transitionHandler(e){
+      if (e.propertyName  === 'transform'){
+        console.log(e)
+        e.currentTarget.classList.remove('playing')
+      }
+    }
+  })()
 </script>
 
 
